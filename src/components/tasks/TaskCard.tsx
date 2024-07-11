@@ -22,7 +22,7 @@ function TaskCard({ task }: TaskCardProps) {
           <Button variant="ghost" className="p-1 hover:cursor-grab">
             <GripVertical className="h-4 w-4" />
           </Button>
-          <CardTitle>{task.title}</CardTitle>
+          <CardTitle className="">{task.title}</CardTitle>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -32,7 +32,7 @@ function TaskCard({ task }: TaskCardProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem>
-              <span>Rename</span>
+              <span>Edit</span>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <span className="text-red-500">Delete</span>
@@ -41,7 +41,7 @@ function TaskCard({ task }: TaskCardProps) {
         </DropdownMenu>
       </CardHeader>
       <CardContent className="h-40 bg-muted overflow-auto p-2">
-        <p>{task.description}</p>
+        <p className="break-words">{task.description}</p>
       </CardContent>
     </Card>
   );
