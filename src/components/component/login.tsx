@@ -9,23 +9,25 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/validations/loginSchema";
 import toast, { Toaster } from "react-hot-toast";
-import { useState } from "react";
+type loginData = {
+  username: string;
+  password: string;
+};
 
 export function Login() {
-  const { register, handleSubmit} = useForm({
+  const { register, handleSubmit} = useForm<loginData>({
     resolver: zodResolver(loginSchema)
   });
 
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<loginData> = (data) => {
     console.log(data);
   };
 
-  const onError = (errors: any) => {
-    // console.log(errors);
+  const onError = () => {
     toast.error("Invalid credentials, login")
   }
 
