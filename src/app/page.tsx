@@ -1,9 +1,7 @@
-import {Dashboard} from "@/components/Dashboard"
-
 function Home() {
   return (
     <div>
-      <Dashboard/>
+      <p>Main page</p>
     </div>
   )
 }
