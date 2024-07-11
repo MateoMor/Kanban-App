@@ -13,7 +13,7 @@ function SideBar() {
     <aside className="w-64 bg-white border-r">
       <nav className="flex flex-col p-4 space-y-2">
         <Link
-          href="#"
+          href="/home"
           className="flex items-center space-x-2 text-gray-700"
           prefetch={false}
         >
@@ -21,31 +21,7 @@ function SideBar() {
           <span>Dashboard</span>
         </Link>
         <Link
-          href="#"
-          className="flex items-center space-x-2 text-gray-700"
-          prefetch={false}
-        >
-          <WebcamIcon className="w-5 h-5" />
-          <span>Chat Bot</span>
-        </Link>
-        <Link
-          href="#"
-          className="flex items-center space-x-2 text-gray-700"
-          prefetch={false}
-        >
-          <UserIcon className="w-5 h-5" />
-          <span>User</span>
-        </Link>
-        <Link
-          href="#"
-          className="flex items-center space-x-2 text-gray-700"
-          prefetch={false}
-        >
-          <UserIcon className="w-5 h-5" />
-          <span>Employee</span>
-        </Link>
-        <Link
-          href="#"
+          href="/home/profile"
           className="flex items-center space-x-2 text-gray-700"
           prefetch={false}
         >
@@ -53,7 +29,7 @@ function SideBar() {
           <span>Profile</span>
         </Link>
         <Link
-          href="#"
+          href="/home/dashboard"
           className="flex items-center space-x-2 text-gray-700"
           prefetch={false}
         >
@@ -61,12 +37,12 @@ function SideBar() {
           <span>Kanban</span>
         </Link>
         <Link
-          href="#"
+          href="/axios/logout"
           className="flex items-center space-x-2 text-gray-700"
           prefetch={false}
         >
           <LogInIcon className="w-5 h-5" />
-          <span>Login</span>
+          <span>Logout</span>
         </Link>
       </nav>
     </aside>
