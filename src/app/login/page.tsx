@@ -1,11 +1,12 @@
 import { Login } from '@/components/component/login'
 import React from 'react'
+
 export default function LoginPage() {
   return (
     <div className='flex'>
-        <div className='basis-1/2 bg-red-600'>
+        <div className='w-1/2 bg-foreground z-10 hidden md:block'>
         </div>
-        <div className='basis-1/2'>
+        <div className='w-full md:w-1/2'>
             <Login ></Login>
         </div>
     </div>
