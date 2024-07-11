@@ -12,17 +12,19 @@ interface Task {
 
 interface TaskCardProps {
   task: Task;
+  onEdit: (task: Task) => void;
+  onDelete: (taskId: string) => void;
 }
 
-function TaskCard({ task }: TaskCardProps) {
+function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   return (
-    <Card>
+    <Card className="w-60">
       <CardHeader className="flex flex-row items-center justify-between p-2 gap-6">
         <div className="flex flex-row items-center">
           <Button variant="ghost" className="p-1 hover:cursor-grab">
             <GripVertical className="h-4 w-4" />
           </Button>
-          <CardTitle className="">{task.title}</CardTitle>
+          <CardTitle className="break-words">{task.title}</CardTitle>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -31,10 +33,10 @@ function TaskCard({ task }: TaskCardProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onEdit(task)}>
               <span>Edit</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onDelete(task.id)}>
               <span className="text-red-500">Delete</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
