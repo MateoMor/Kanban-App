@@ -1,8 +1,8 @@
 "use client";
 
-import DashboardHeader from "@/components/DashboardHeader";
-import TaskCard from "@/components/TaskCard";
-import CreateTaskModal from "@/components/CreateTaskModal";
+import DashboardHeader from "@/app/home/dashboard/DashboardHeader";
+import TaskCard from "@/components/tasks/TaskCard";
+import CreateTaskModal from "@/components/tasks/CreateTaskModal";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
