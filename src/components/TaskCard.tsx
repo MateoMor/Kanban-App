@@ -8,7 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-function TaskCard() {
+// Define una interfaz para las propiedades
+interface TaskCardProps {
+  cardTitle: string;
+}
+
+const TaskCard: React.FC<TaskCardProps> = ({ cardTitle }) => {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between p-2 gap-6">
@@ -16,7 +21,7 @@ function TaskCard() {
           <Button variant="ghost" className="p-1 hover:cursor-grab">
             <GripVertical className="h-4 w-4" />
           </Button>
-          <CardTitle>Card Title</CardTitle>
+          <CardTitle>{cardTitle}</CardTitle>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
