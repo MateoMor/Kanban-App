@@ -1,5 +1,6 @@
 "use client";
 
+import CreateNewSectionButton from "@/components/CreateNewSectionButton";
 import DashboardHeader from "@/components/DashboardHeader";
 import TaskCard from "@/components/TaskCard";
 import CreateTaskModal from "@/components/CreateTaskModal";
@@ -24,6 +25,7 @@ function Page() {
         <Button variant="outline" onClick={() => setIsModalOpen(true)}>
           + Add New Task
         </Button>
+        <CreateNewSectionButton />
       </div>
       <div className="flex mt-8 space-x-4">
         {tasks.map((task) => (
