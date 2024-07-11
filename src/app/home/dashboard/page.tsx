@@ -1,6 +1,6 @@
 "use client";
 
-import CreateSectionModal from "@/components/createSectionModal";
+import Sections from "@/components/component/sections";
 import DashboardHeader from "@/components/DashboardHeader";
 import TaskCard from "@/components/TaskCard";
 import CreateTaskModal from "@/components/CreateTaskModal";
@@ -40,23 +40,7 @@ function Page() {
         </Button>
       </div>
 
-      <div className="flex mt-8 space-x-4">
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
-        ))}
-      </div>
-
-      <CreateSectionModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onCreateSection={handleCreateSection}
-      />
-
-      <div className="flex mt-8 space-x-4">
-        {sections.map((section) => (
-          <SectionColumn key={section.id} section={section} />
-        ))}
-      </div>
+      <Sections />
     </main>
   );
 }
