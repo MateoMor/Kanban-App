@@ -13,6 +13,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/validations/loginSchema";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 type loginData = {
   username: string;
   password: string;
@@ -22,9 +24,23 @@ export function Login() {
   const { register, handleSubmit} = useForm<loginData>({
     resolver: zodResolver(loginSchema)
   });
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<loginData> = (data) => {
-    console.log(data);
+    try{
+      console.log(data);
+      //Simulate a request to the server
+      if(data.username === 'usuario1234' && data.password === '123456'){
+        toast.success("User found")
+        router.push('/home')
+      }
+      else{
+        toast.error("User not found, check your credentials")
+      }
+    }
+    catch(err){
+      toast.error("Internal server error, try again later")
+    }
   };
 
   const onError = () => {
@@ -47,10 +63,12 @@ export function Login() {
             <Label htmlFor="password">Password</Label>
             <Input id="password" placeholder="Enter your password" type="password" {...register("password")} />
           </div>
-          <Button type="submit" className="w-full bg-black text-white">Login</Button>
+          <div>
+          <Button type="submit" className="w-full my-2">Login</Button>
           <Link href={'/register'}>
-            <Button type="button" className="w-full bg-black text-white">Register</Button>
+            <Button type="button" className="w-full ">Register</Button>
           </Link>
+          </div>
         </form>
         <p className="text-xs text-center text-muted-foreground">
           By clicking continue, you agree to our{" "}
