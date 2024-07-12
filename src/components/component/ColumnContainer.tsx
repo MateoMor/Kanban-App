@@ -5,6 +5,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useMemo, useState } from "react";
 import PlusIcon from "../../icons/PlusIcon";
 import TaskCard from "./TaskCard";
+import { Trash2Icon } from "lucide-react";
 
 interface Props {
   column: Column;
@@ -69,6 +70,7 @@ function ColumnContainer({
       rounded-md
       flex
       flex-col
+      
       "
       ></div>
     );
@@ -86,6 +88,7 @@ function ColumnContainer({
   rounded-md
   flex
   flex-col
+  shadow-md
   "
     >
       {/* Column title */}
@@ -129,7 +132,7 @@ function ColumnContainer({
           {!editMode && column.title}
           {editMode && (
             <input
-              className="bg-black focus:border-rose-500 border rounded outline-none px-2"
+              className="bg-black focus:border-rose-500 border rounded outline-none px-2 "
               value={column.title}
               onChange={(e) => updateColumn(column.id, e.target.value)}
               autoFocus
@@ -156,7 +159,7 @@ function ColumnContainer({
         py-2
         "
         >
-          <TrashIcon />
+          <Trash2Icon />
         </button>
       </div>
 

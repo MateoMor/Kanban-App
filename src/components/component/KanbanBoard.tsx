@@ -1,7 +1,7 @@
 'use client'
 
 import PlusIcon from "../../icons/PlusIcon";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Column, Id, Task } from "../../types";
 import ColumnContainer from "./ColumnContainer";
 
@@ -19,6 +19,7 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
+import { Columns } from "lucide-react";
 
 const defaultCols: Column[] = [
   {
@@ -113,6 +114,17 @@ function KanbanBoard() {
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+
+  // Se activa cada vez que hay una modificación de las secciones
+  useEffect(() => {
+    console.log("Columns: ", columns); 
+  }, [columns])
+
+  // Se activa cada vez que hay una modificación de las secciones
+  useEffect(() => {
+    console.log("Tasks: ", Object.keys(tasks) ,tasks); 
+  }, [tasks])
+  
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
