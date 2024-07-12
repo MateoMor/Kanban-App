@@ -17,7 +17,6 @@ export async function login(data: LoginData): Promise<void> {
   try {
 
     const response = await api.post('/api/auth/login', data);
-    console.log(response.data);
     localStorage.setItem("token", response.data.token);
 
   } catch (error: any) {
@@ -35,7 +34,7 @@ export async function login(data: LoginData): Promise<void> {
       console.error(`Error al configurar la solicitud: ${error.message}`);
       throw new Error(`Error al configurar la solicitud: ${error.message}`);
     }
-    
+
   }
 }
 
