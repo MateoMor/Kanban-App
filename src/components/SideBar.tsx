@@ -25,7 +25,7 @@ function SideBar() {
     <aside className="w-64 bg-white border-r">
       <nav className="flex flex-col p-4 space-y-2">
         <Link
-          href="/home"
+          href="/home/dashboard"
           className="flex items-center space-x-2 text-gray-700"
           prefetch={false}
         >
@@ -40,14 +40,7 @@ function SideBar() {
           <UsersIcon className="w-5 h-5" />
           <span>Profile</span>
         </Link>
-        <Link
-          href="/home/dashboard"
-          className="flex items-center space-x-2 text-gray-700"
-          prefetch={false}
-        >
-          <KanbanIcon className="w-5 h-5" />
-          <span>Kanban</span>
-        </Link>
+        
         <button
           onClick={handleLogout}
           className="flex items-center space-x-2 text-gray-700"

@@ -27,9 +27,7 @@ function UserButton() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/home/settings" className="w-full justify-start">
-                    Settings
-                  </Link>
+                  
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
