@@ -32,18 +32,17 @@ export function Login() {
 
   const onSubmit: SubmitHandler<loginData> = async (data: any) => {
     try{
- 
-      await login(data)
+      const datas = await login(data)
 
       if(localStorage.getItem("token")){
         toast.success("Login successful")
         setTimeout(() => {
-          router.push("/home")
+          router.push("/dashboard")
         }, 1500)
 
       }
       else{
-        toast.error("User not found, check your credentials")
+        toast.error("Incorrect username or password")
       }
     }
     catch(err){
