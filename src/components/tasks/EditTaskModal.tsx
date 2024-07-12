@@ -27,7 +27,7 @@ const EditTaskModal: React.FC<EditTaskModalProps> = ({ isOpen, onClose, onEditTa
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-white backdrop-blur-lg flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-lg w-96 shadow-2xl">
         <h2 className="text-2xl font-bold mb-4">Edit Task</h2>
         <form onSubmit={handleSubmit}>
