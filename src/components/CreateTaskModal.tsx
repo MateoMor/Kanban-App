@@ -27,7 +27,7 @@ interface TaskCardProps {
   onDeleteTask: (taskId: string) => void;
   onEditTask: (
     taskId: string,
-    updatedTask: { title: string; title: string }
+    updatedTask: { title: string; description: string }
   ) => void;
 }
 
@@ -53,7 +53,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem
-              onClick={() => onEditTask(task.title, task.title)}
+              onClick={() =>
+                onEditTask(task.id, {
+                  title: "enter new title",
+                  description: "enter new description",
+                })
+              }
             >
               <span>Rename</span>
             </DropdownMenuItem>
