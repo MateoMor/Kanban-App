@@ -1,7 +1,9 @@
+"use client"
 import React from 'react'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Button } from '../ui/button'
 import { Avatar, AvatarImage } from '../ui/avatar'
+import Link from 'next/link'
 
 function UserButton() {
   return (
@@ -16,26 +18,28 @@ function UserButton() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
+
+
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Link href="/home/profile"  className="w-full justify-start" >
                     Profile
-                  </Button>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Link href="/home/settings" className="w-full justify-start">
                     Settings
-                  </Button>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Button variant="ghost" className="w-full justify-start">
+                  <Link href='/axios/logout' className="w-full justify-start">
                     Logout
-                  </Button>
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
   )
 }
 
-export default UserButton
+export default UserButton;
