@@ -137,14 +137,14 @@ function KanbanBoard() {
   return (
     <div
       className="
-        m-auto
         flex
-        min-h-screen
+        p-3
         w-full
-        items-center
+        lg:flex-col items-center justify-center
         overflow-x-auto
         overflow-y-hidden
-        px-[40px]
+        px-[10px]
+        flex-wrap
     "
     >
       <DndContext
@@ -153,8 +153,8 @@ function KanbanBoard() {
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
       >
-        <div className="m-auto flex gap-4">
-          <div className="flex gap-4">
+        <div className="my-1 flex flex-col lg:flex-row gap-4">
+          <div className="flex flex-col lg:flex-row gap-4">
             <SortableContext items={columnsId}>
               {columns.map((col) => (
                 <ColumnContainer
@@ -221,7 +221,9 @@ function KanbanBoard() {
           document.body
         )}
       </DndContext>
+      
     </div>
+    
   );
 
   function createTask(columnId: Id) {

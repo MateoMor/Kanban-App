@@ -65,12 +65,11 @@ function ColumnContainer({
       border-2
       border-pink-500
       w-[350px]
-      h-[500px]
-      max-h-[500px]
+      h-100vh
+      max-h-[865px]
       rounded-md
       flex
       flex-col
-      
       "
       ></div>
     );
@@ -83,8 +82,8 @@ function ColumnContainer({
       className="
   bg-columnBackgroundColor
   w-[350px]
-  h-[500px]
-  max-h-[500px]
+  h-100vh
+  max-h-[860px]
   rounded-md
   flex
   flex-col
