@@ -22,7 +22,7 @@ function SideBar() {
   };
 
   return (
-    <aside className="w-64 bg-white border-r">
+    <aside className="hidden md:block w-64 bg-white border-r">
       <nav className="flex flex-col p-4 space-y-2">
         <Link
           href="/home/dashboard"

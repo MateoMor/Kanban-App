@@ -65,9 +65,9 @@ function ColumnContainer({
       border-2
       border-pink-500
       w-[350px]
-      h-[500px]
-      max-h-[500px]
+      h-100vh
       rounded-md
+      max-h-vh
       flex
       flex-col
       
@@ -81,14 +81,14 @@ function ColumnContainer({
       ref={setNodeRef}
       style={style}
       className="
-  bg-columnBackgroundColor
-  w-[350px]
-  h-[500px]
-  max-h-[500px]
-  rounded-md
-  flex
-  flex-col
-  shadow-md
+        bg-columnBackgroundColor
+        w-[350px]
+        h-100vh
+        xl: max-h-[860px]
+        rounded-md
+        flex
+        flex-col
+        shadow-md
   "
     >
       {/* Column title */}
