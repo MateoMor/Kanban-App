@@ -24,9 +24,18 @@ interface Task {
 
 interface TaskCardProps {
   task: Task;
+  onDeleteTask: (taskId: string) => void;
+  onEditTask: (
+    taskId: string,
+    updatedTask: { title: string; title: string }
+  ) => void;
 }
 
-const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
+const TaskCard: React.FC<TaskCardProps> = ({
+  task,
+  onDeleteTask,
+  onEditTask,
+}) => {
   return (
     <Card className="bg-muted p-4 rounded-md shadow-sm">
       <CardHeader className="flex flex-row items-center justify-between p-2 gap-6">
@@ -43,10 +52,12 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => onEditTask(task.title, task.title)}
+            >
               <span>Rename</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onDeleteTask(task.id)}>
               <span className="text-red-500">Delete</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -57,10 +68,10 @@ const TaskCard: React.FC<TaskCardProps> = ({ task }) => {
       </CardContent>
       <CardFooter className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">John Doe</span>
+          <span className="text-sm text-muted-foreground">Username</span>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline">Task</Badge>
+          <Badge variant="outline">Pro</Badge>
         </div>
       </CardFooter>
     </Card>
