@@ -19,9 +19,7 @@ function DashboardHeader() {
         <h1 className="text-2xl font-bold">Kanban</h1>
         <p className="text-gray-500">Manage tasks by cards</p>
       </div>
-      <Button variant="outline" className="h-10">
-        + Add New Todo
-      </Button>
+      
     </div>
   );
 }
