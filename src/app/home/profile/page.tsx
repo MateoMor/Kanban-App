@@ -1,9 +1,22 @@
-import React from 'react'
+"use client";
 
-function profile() {
+import React, { useState } from 'react';
+import Component from '@/components/component/profile';
+import { string } from 'zod';
+
+const ProfilePage = () => {
+  const [userData, setUserData] = useState({
+    username: '' ,
+    email: '',
+    password: '',
+  });
+
   return (
-    <div>profile</div>
-  )
-}
+    <div className="flex items-center justify-center min-h-screen w-full bg-background text-foreground">
+    
+      <Component user={userData} setUser={setUserData} />
+    </div>
+  );
+};
 
-export default profile
+export default ProfilePage;
