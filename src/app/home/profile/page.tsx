@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import Component from '@/components/component/profile';
-import { string } from 'zod';
+/* import { string } from 'zod'; */
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState({
-    username: '' ,
-    email: '',
+    username: 'John Doe' ,
+    email: 'jhondoe@gmail.com',
     password: '',
   });
 
