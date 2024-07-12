@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 
+// Se crea la interfaz de la api
 const api = axios.create({
     baseURL: 'https://elite-kanban-typescript.onrender.com',
     withCredentials: true,
@@ -9,7 +10,7 @@ const api = axios.create({
 });
 
 
-
+// Se crea interceptores para manejar los errores
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
