@@ -13,11 +13,15 @@ interface RegisterData {
 }
 
 export async function login(data: LoginData): Promise<void> {
+
   try {
+
     const response = await api.post('/api/auth/login', data);
     console.log(response.data);
     localStorage.setItem("token", response.data.token);
+
   } catch (error: any) {
+
     if (error.response) {
       // El servidor respondió con un estado diferente de 2xx
       console.error(`Error en la respuesta del servidor: ${error.response.data.message}`);
@@ -31,6 +35,7 @@ export async function login(data: LoginData): Promise<void> {
       console.error(`Error al configurar la solicitud: ${error.message}`);
       throw new Error(`Error al configurar la solicitud: ${error.message}`);
     }
+    
   }
 }
 

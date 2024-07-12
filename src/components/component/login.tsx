@@ -20,15 +20,17 @@ export function Login() {
   const { register, handleSubmit} = useForm<loginData>({
     resolver: zodResolver(loginSchema)
   });
+
   const router = useRouter();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/home");
+      router.push("/dashboard");
     }
-  }, []);
+  },[]);
 
-  const onSubmit: SubmitHandler<loginData> = async (data) => {
+  const onSubmit: SubmitHandler<loginData> = async (data: any) => {
     try{
  
       await login(data)

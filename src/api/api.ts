@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 const api = axios.create({
     baseURL: 'https://elite-kanban-typescript.onrender.com',
@@ -22,21 +21,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
-  const cookies = context.req.headers.cookie;
-  const token = cookies?.split('; ').find(row => row.startsWith('access_token='))?.split('=')[1];
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {}, // Puedes devolver props adicionales aquí si los necesitas
-  };
-};
