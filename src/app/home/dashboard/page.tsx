@@ -10,31 +10,30 @@ import { Button } from "@/components/ui/button";
 function Page() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [tasks, setTasks] = useState<{ id: string; title: string; description: string }[]>([]);
-  const [taskToEdit, setTaskToEdit] = useState<{ id: string; title: string; description: string } | null>(null);
+  const [tasks, setTasks] = useState<{ title: string; description: string }[]>([]);
+  const [taskToEdit, setTaskToEdit] = useState<{ title: string; description: string } | null>(null);
 
   const handleCreateTask = (newTask: { title: string; description: string }) => {
-    const taskWithId = { ...newTask, id: Date.now().toString() };
-    setTasks([...tasks, taskWithId]);
+    setTasks([...tasks, newTask]);
     setIsCreateModalOpen(false);
   };
 
-  const handleEditTask = (updatedTask: { id: string; title: string; description: string }) => {
-    const updatedTasks = tasks.map(task =>
-      task.id === updatedTask.id ? updatedTask : task
-    );
+  const handleEditTask = (updatedTask: { title: string; description: string }, index: number) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[index] = updatedTask;
     setTasks(updatedTasks);
     setIsEditModalOpen(false);
     setTaskToEdit(null);
   };
 
-  const handleEditClick = (task: { id: string; title: string; description: string }) => {
+  const handleEditClick = (task: { title: string; description: string }) => {
     setTaskToEdit(task);
     setIsEditModalOpen(true);
   };
 
-  const handleDeleteTask = (taskId: string) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+  const handleDeleteTask = (index: number) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
   };
 
   return (
@@ -47,12 +46,12 @@ function Page() {
           </Button>
         </div>
         <div className="flex mt-8 space-x-4">
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             <TaskCard
-              key={task.id}
+              key={index}
               task={task}
-              onEdit={handleEditClick}
-              onDelete={handleDeleteTask}
+              onEdit={() => handleEditClick(task)}
+              onDelete={() => handleDeleteTask(index)}
             />
           ))}
         </div>
@@ -70,7 +69,7 @@ function Page() {
         <EditTaskModal
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
-          onEditTask={handleEditTask}
+          onEditTask={(updatedTask) => handleEditTask(updatedTask, tasks.indexOf(taskToEdit))}
           task={taskToEdit}
         />
       )}

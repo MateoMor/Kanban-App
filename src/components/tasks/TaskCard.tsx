@@ -3,6 +3,8 @@ import { GripVertical, Ellipsis } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Task {
   id: string;
@@ -47,7 +49,9 @@ function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
         </div>
       </CardHeader>
       <CardContent className="h-40 bg-muted overflow-auto p-2">
-        <p className="break-words">{task.description}</p>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} className="break-words">
+          {task.description}
+        </ReactMarkdown>
       </CardContent>
     </Card>
   );
