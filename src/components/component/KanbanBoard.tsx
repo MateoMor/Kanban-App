@@ -195,7 +195,7 @@ function KanbanBoard() {
           </button>
         </div>
 
-        {createPortal(
+        {typeof document !== 'undefined' && createPortal(
           <DragOverlay>
             {activeColumn && (
               <ColumnContainer
