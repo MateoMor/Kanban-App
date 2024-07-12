@@ -7,20 +7,35 @@ import EditTaskModal from "@/components/tasks/EditTaskModal";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
+type TaskBase = {
+  title: string;
+  description: string;
+};
+
+type Task = TaskBase & {
+  id: string;
+};
+
 function Page() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [tasks, setTasks] = useState<{ id: string; title: string; description: string }[]>([]);
-  const [taskToEdit, setTaskToEdit] = useState<{ id: string; title: string; description: string } | null>(null);
+  const [tasks, setTasks] = useState<
+    { id: string; title: string; description: string }[]
+  >([]);
+  const [taskToEdit, setTaskToEdit] = useState<{
+    id: string;
+    title: string;
+    description: string;
+  } | null>(null);
 
-  const handleCreateTask = (newTask: { title: string; description: string }) => {
-    const taskWithId = { ...newTask, id: Date.now().toString() };
+  const handleCreateTask = (newTask: TaskBase) => {
+    const taskWithId: Task = { ...newTask, id: Date.now().toString() };
     setTasks([...tasks, taskWithId]);
     setIsCreateModalOpen(false);
   };
 
-  const handleEditTask = (updatedTask: { id: string; title: string; description: string }) => {
-    const updatedTasks = tasks.map(task =>
+  const handleEditTask = (updatedTask: Task) => {
+    const updatedTasks = tasks.map((task) =>
       task.id === updatedTask.id ? updatedTask : task
     );
     setTasks(updatedTasks);
@@ -28,13 +43,13 @@ function Page() {
     setTaskToEdit(null);
   };
 
-  const handleEditClick = (task: { id: string; title: string; description: string }) => {
+  const handleEditClick = (task: Task) => {
     setTaskToEdit(task);
     setIsEditModalOpen(true);
   };
 
   const handleDeleteTask = (taskId: string) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
   return (
