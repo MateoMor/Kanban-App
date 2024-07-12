@@ -1,7 +1,7 @@
 "use client";
 
-import Sections from "@/components/sections";
-import DashboardHeader from "@/components/DashboardHeader";
+import Sections from "@/components/kanbanDashboard/sections";
+import DashboardHeader from "@/components/kanbanDashboard/DashboardHeader";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "lucide-react";

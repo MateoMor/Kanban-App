@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import TaskCard from "@/components/CreateTaskModal";
+import TaskCard from "@/components/kanbanDashboard/CreateTaskModal";
 
 interface Task {
   id: string;
