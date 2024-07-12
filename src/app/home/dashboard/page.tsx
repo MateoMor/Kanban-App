@@ -1,6 +1,6 @@
 "use client";
 
-import Sections from "@/components/kanbanDashboard/sections";
+import SectionsBoard from "@/components/kanbanDashboard/SectionsBoard";
 import DashboardHeader from "@/components/kanbanDashboard/DashboardHeader";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -35,7 +35,7 @@ function Page() {
       {/* <Button variant="outline" onClick={() => setIsModalOpen(true)}>
           + Add New Section
         </Button> */}
-      <Sections />
+      <SectionsBoard />
     </main>
   );
 }
