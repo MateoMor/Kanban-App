@@ -1,12 +1,12 @@
 "use client";
 
-import Sections from "@/components/component/sections";
+import Sections from "@/components/sections";
 import DashboardHeader from "@/components/DashboardHeader";
-import TaskCard from "@/components/TaskCard";
-import CreateTaskModal from "@/components/CreateTaskModal";
+import SectionButton from "@/components/CreateButton";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import SectionColumn from "@/components/SectionColumn";
+import { PlusIcon } from "lucide-react";
 
 function Page() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,12 +34,9 @@ function Page() {
   return (
     <main className="flex-1 p-8">
       <DashboardHeader />
-      <div className="flex items-center justify-between mt-8">
-        <Button variant="outline" onClick={() => setIsModalOpen(true)}>
+      {/* <Button variant="outline" onClick={() => setIsModalOpen(true)}>
           + Add New Section
-        </Button>
-      </div>
-
+        </Button> */}
       <Sections />
     </main>
   );
