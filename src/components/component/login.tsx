@@ -32,7 +32,7 @@ export function Login() {
 
   const onSubmit: SubmitHandler<loginData> = async (data: any) => {
     try{
-      const datas = await login(data)
+      await login(data)
 
       if(localStorage.getItem("token")){
         toast.success("Login successful")

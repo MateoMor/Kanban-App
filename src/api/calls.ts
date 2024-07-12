@@ -5,6 +5,21 @@ interface LoginData {
   username: string;
   password: string;
 }
+interface Card {
+  id: string;
+  title: string;
+  content: string;
+  section_id: string;
+}
+interface Section {
+  id: string;
+  title: string;
+  user_id: string;
+  cards: Card[];
+}
+interface UserData {
+  sections: Section[];
+}
 
 interface RegisterData {
   username: string;
@@ -80,5 +95,20 @@ export function logout() {
     }
 
     throw new Error(errorMessage);
+  }
+}
+
+
+export async function getUserData(token: string): Promise<UserData> {
+  try {
+    const response = await api.get('/api/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    let errorMessage = 'Error al obtener datos del usuario';
+    return error
   }
 }

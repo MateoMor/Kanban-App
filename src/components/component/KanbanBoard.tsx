@@ -4,6 +4,8 @@ import PlusIcon from "../../icons/PlusIcon";
 import { useEffect, useMemo, useState } from "react";
 import { Column, Id, Task } from "../../types";
 import ColumnContainer from "./ColumnContainer";
+import { getUserData } from "@/api/calls";
+import { useRouter } from "next/navigation";
 
 
 import {
@@ -20,110 +22,56 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 import { Columns } from "lucide-react";
-
-const defaultCols: Column[] = [
-  {
-    id: "todo",
-    title: "Todo",
-  },
-  {
-    id: "doing",
-    title: "Work in progress",
-  },
-  {
-    id: "done",
-    title: "Done",
-  },
-];
-
-const defaultTasks: Task[] = [
-  {
-    id: "1",
-    columnId: "todo",
-    content: "List admin APIs for dashboard",
-  },
-  {
-    id: "2",
-    columnId: "todo",
-    content:
-      "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
-  },
-  {
-    id: "3",
-    columnId: "doing",
-    content: "Conduct security testing",
-  },
-  {
-    id: "4",
-    columnId: "doing",
-    content: "Analyze competitors",
-  },
-  {
-    id: "5",
-    columnId: "done",
-    content: "Create UI kit documentation",
-  },
-  {
-    id: "6",
-    columnId: "done",
-    content: "Dev meeting",
-  },
-  {
-    id: "7",
-    columnId: "done",
-    content: "Deliver dashboard prototype",
-  },
-  {
-    id: "8",
-    columnId: "todo",
-    content: "Optimize application performance",
-  },
-  {
-    id: "9",
-    columnId: "todo",
-    content: "Implement data validation",
-  },
-  {
-    id: "10",
-    columnId: "todo",
-    content: "Design database schema",
-  },
-  {
-    id: "11",
-    columnId: "todo",
-    content: "Integrate SSL web certificates into workflow",
-  },
-  {
-    id: "12",
-    columnId: "doing",
-    content: "Implement error logging and monitoring",
-  },
-  {
-    id: "13",
-    columnId: "doing",
-    content: "Design and implement responsive UI",
-  },
-];
+interface Card {
+  id: string,
+  title: string,
+  content: string,
+  section_id: string
+}
+interface Section {
+  id: string,
+  title: string,
+  user_id: string,
+  cards: Card[],
+}
+interface UserData {
+  sections: Section[]
+}
 
 function KanbanBoard() {
-  const [columns, setColumns] = useState<Column[]>(defaultCols);
-  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+  const router = useRouter();
+  const [userData, setUserData] = useState<UserData | null>(null)
 
-  const [tasks, setTasks] = useState<Task[]>(defaultTasks);
+  useEffect( () => {
+    async function getData() {
+      const token = localStorage.getItem("token");
+      if (token){
+        const fetchedUserData = await getUserData(token);
+        console.log(fetchedUserData)
+        setUserData(fetchedUserData)
+      }
+      else {
+        router.push('/login')
+      }
+    }
+    getData()
+  })
 
-  const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+  //
 
-  const [activeTask, setActiveTask] = useState<Task | null>(null);
+  //const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+
+  //const [activeTask, setActiveTask] = useState<Task | null>(null);
 
   // Se activa cada vez que hay una modificación de las secciones
-  useEffect(() => {
-    console.log("Columns: ", columns); 
-  }, [columns])
+  // useEffect(() => {
+  //   console.log("Columns: ", columns); 
+  // }, [columns])
 
   // Se activa cada vez que hay una modificación de las secciones
-  useEffect(() => {
-    console.log("Tasks: ", Object.keys(tasks) ,tasks); 
-  }, [tasks])
+  // useEffect(() => {
+  //   console.log("Tasks: ", Object.keys(tasks) ,tasks); 
+  // }, [tasks])
   
 
   const sensors = useSensors(
@@ -147,6 +95,7 @@ function KanbanBoard() {
         px-[40px]
     "
     >
+      
       <DndContext
         sensors={sensors}
         onDragStart={onDragStart}
@@ -156,7 +105,9 @@ function KanbanBoard() {
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
+
               {columns.map((col) => (
+
                 <ColumnContainer
                   key={col.id}
                   column={col}
@@ -167,6 +118,7 @@ function KanbanBoard() {
                   updateTask={updateTask}
                   tasks={tasks.filter((task) => task.columnId === col.id)}
                 />
+
               ))}
             </SortableContext>
           </div>
@@ -223,6 +175,21 @@ function KanbanBoard() {
       </DndContext>
     </div>
   );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   function createTask(columnId: Id) {
     const newTask: Task = {
