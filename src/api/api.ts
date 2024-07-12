@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { GetServerSideProps, GetServerSidePropsContext } from 'next';
 
 const api = axios.create({
