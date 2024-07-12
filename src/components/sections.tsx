@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -19,61 +17,82 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import TaskCard from "./CreateTaskModal";
 
 interface SectionsProps {}
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+}
+
 interface Section {
   id: number;
   title: string;
+  tasks: Task[];
 }
 
 const Sections: React.FC<SectionsProps> = () => {
   const [sections, setSections] = useState<Section[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [columnTitle, setColumnTitle] = useState<string>("");
+  const [isCreateTaskModalOpen, setIsCreateTaskModalOpen] =
+    useState<boolean>(false);
+  const [currentSectionId, setCurrentSectionId] = useState<number | null>(null);
+  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+  const [newTaskDescription, setNewTaskDescription] = useState<string>("");
 
   const handleCreateColumn = () => {
-    const newSection = { id: sections.length, title: columnTitle };
+    const newSection = { id: sections.length, title: columnTitle, tasks: [] };
     setSections([...sections, newSection]);
     setIsModalOpen(false);
     setColumnTitle("");
   };
 
+  const handleCreateTask = () => {
+    if (currentSectionId !== null) {
+      const newTask = {
+        id: Date.now().toString(),
+        title: newTaskTitle,
+        description: newTaskDescription,
+      };
+      setSections(
+        sections.map((section) =>
+          section.id === currentSectionId
+            ? { ...section, tasks: [...section.tasks, newTask] }
+            : section
+        )
+      );
+      setIsCreateTaskModalOpen(false);
+      setNewTaskTitle("");
+      setNewTaskDescription("");
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {sections.map((section) => (
-        
-        <div key= {section.id} className="bg-card rounded-lg p-4 shadow-xl">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-medium">{section.title}</h3>
-          <Button variant="outline" size="sm">
-            <PlusIcon className="w-4 h-4 m-2" />
-          </Button>
+        <div key={section.id} className="bg-card rounded-lg p-4 shadow-xl">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-medium">{section.title}</h3>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setCurrentSectionId(section.id);
+                setIsCreateTaskModalOpen(true);
+              }}
+            >
+              <PlusIcon className="w-4 h-4 m-2" />
+            </Button>
+          </div>
+          <div className="space-y-4">
+            {section.tasks.map((task) => (
+              <TaskCard key={task.id} task={task} />
+            ))}
+          </div>
         </div>
-        <div className="space-y-4">
-          <Card className="bg-muted p-4 rounded-md shadow-sm">
-            <CardHeader>
-              <CardTitle>Design new homepage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">
-                Create a new homepage design with a modern and clean look.
-              </p>
-            </CardContent>
-            <CardFooter className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">John Doe</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge variant="outline">Design</Badge>
-                <Badge variant="outline">High Priority</Badge>
-              </div>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
       ))}
-      
-        
       <div className="bg-card rounded-lg p-4 shadow-xl">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-medium">Create New Column </h2>
@@ -108,6 +127,45 @@ const Sections: React.FC<SectionsProps> = () => {
               Cancel
             </Button>
             <Button onClick={handleCreateColumn}>Create Column</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={isCreateTaskModalOpen}
+        onOpenChange={setIsCreateTaskModalOpen}
+      >
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle>Create New Task</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="task-title">Task Title</Label>
+              <Input
+                id="task-title"
+                placeholder="Enter task title"
+                value={newTaskTitle}
+                onChange={(e) => setNewTaskTitle(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="task-description">Task Description</Label>
+              <Input
+                id="task-description"
+                placeholder="Enter task description"
+                value={newTaskDescription}
+                onChange={(e) => setNewTaskDescription(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsCreateTaskModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleCreateTask}>Create Task</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
