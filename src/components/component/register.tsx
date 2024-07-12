@@ -12,6 +12,8 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { registerSchema } from "@/validations/registerSchema"
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 
 type registerData = {
@@ -27,9 +29,20 @@ export function Register() {
       resolver: zodResolver(registerSchema)
     }
   )
+  const router = useRouter();
 
   const onSubmit:SubmitHandler<registerData> = (data: registerData) => {
-    console.log(data)
+    try{
+      console.log(data)
+      let pass=true;
+      if(pass){
+        toast.success("User registered")
+        router.push('/login')
+      }
+    }catch(err){
+      toast.error("Error, try again")
+    }
+    
   }
 
   const onError = () => {
@@ -42,7 +55,7 @@ export function Register() {
       <Toaster />
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center">Register</h2>
-        <p className="text-center text-muted-foreground">Enter your user infor</p>
+        <p className="text-center text-muted-foreground">Enter your user information</p>
         <form onSubmit={handleSubmit(onSubmit,onError)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
@@ -56,10 +69,10 @@ export function Register() {
             <Label htmlFor="password">Password</Label>
             <Input id="password" placeholder="Enter your password" type="password" {...register("password")}/>
           </div>
-          <Button type="submit" className="w-full bg-black text-white">Register</Button>            
+          <Button type="submit" className="w-full">Register</Button>            
           <span>Already have an account?</span>
           <Link href={"/login"}>
-                <Button className="w-full bg-black text-white">Go to login</Button>
+                <Button className="w-full">Go to login</Button>
           </Link>
         </form>
         <p className="text-xs text-center text-muted-foreground">

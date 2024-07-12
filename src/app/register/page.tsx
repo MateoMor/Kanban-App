@@ -3,9 +3,9 @@ import React from 'react'
 export default function RegisterPage() {
   return (
     <div className='flex'>
-        <div className='basis-1/2 bg-midnight'>
+        <div className='w-1/2 bg-foreground hidden md:block'>
         </div>
-        <div className='basis-1/2'>
+        <div className='w-full md:w-1/2'>
             <Register></Register>
         </div>
     </div>

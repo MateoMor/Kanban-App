@@ -1,21 +1,15 @@
-"use client";
+import { Login } from '@/components/component/login'
+import React from 'react'
 
-import React, { useState } from 'react';
-import Component from '@/components/component/profile';
-
-const ProfilePage = () => {
-  const [userData, setUserData] = useState({
-    username: 'johndoe',
-    email: 'johndoe@example.com',
-    password: '********',
-  });
-
+export default function LoginPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen w-full bg-background text-foreground">
-      <h1>User Profile Page</h1>
-      <Component user={userData} setUser={setUserData} />
+    <div className='flex'>
+        <div className='w-1/2 bg-foreground z-10 hidden md:block'>
+        </div>
+        <div className='w-full md:w-1/2'>
+            <Login ></Login>
+        </div>
     </div>
   );
 };
 
-export default ProfilePage;
