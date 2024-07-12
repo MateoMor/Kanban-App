@@ -17,7 +17,7 @@ interface SectionData {
   tasks: Task[];
 }
 
-const SectionBoard: React.FC = () => {
+const SectionsBoard: React.FC = () => {
   const [sections, setSections] = useState<SectionData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [columnTitle, setColumnTitle] = useState<string>("");
@@ -132,4 +132,4 @@ const SectionBoard: React.FC = () => {
   );
 };
 
-export default SectionBoard;
+export default SectionsBoard;
