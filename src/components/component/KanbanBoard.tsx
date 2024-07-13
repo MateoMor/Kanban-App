@@ -68,22 +68,22 @@ function KanbanBoard() {
 
   if (userData === null) {router.push('/login'); return}
 
+  //
 
   const [activeColumn, setActiveColumn] = useState<Section | null>(null);
 
   const [activeTask, setActiveTask] = useState<Card | null>(null);
 
-  function onDragStart(event: DragStartEvent) {
-    if (event.active.data.current?.type === "Column") {
-      setActiveColumn(event.active.data.current.column);
-      return;
-    }
+  // Se activa cada vez que hay una modificación de las secciones
+  // useEffect(() => {
+  //   console.log("Columns: ", columns); 
+  // }, [columns])
 
-    if (event.active.data.current?.type === "Task") {
-      setActiveTask(event.active.data.current.task);
-      return;
-    }
-  }
+  // Se activa cada vez que hay una modificación de las secciones
+  // useEffect(() => {
+  //   console.log("Tasks: ", Object.keys(tasks) ,tasks); 
+  // }, [tasks])
+  
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -166,7 +166,7 @@ function KanbanBoard() {
   );
 
 
-}
+
 
 
 
@@ -193,8 +193,7 @@ function KanbanBoard() {
   }
 
   function createNewColumn() {
-    // Llamar a la api y crear una nueva columna
-
+    
   }
 
   function deleteColumn(id: string) {
@@ -205,76 +204,87 @@ function KanbanBoard() {
 
   }
 
+  function onDragStart(event: DragStartEvent) {
+    if (event.active.data.current?.type === "Column") {
+      setActiveColumn(event.active.data.current.column);
+      return;
+    }
+
+    if (event.active.data.current?.type === "Task") {
+      setActiveTask(event.active.data.current.task);
+      return;
+    }
+  }
 
   function onDragEnd(event: DragEndEvent) {
-    // setActiveColumn(null);
-    // setActiveTask(null);
+    setActiveColumn(null);
+    setActiveTask(null);
 
-    // const { active, over } = event;
-    // if (!over) return;
+    const { active, over } = event;
+    if (!over) return;
 
-    // const activeId = active.id;
-    // const overId = over.id;
+    const activeId = active.id;
+    const overId = over.id;
 
-    // if (activeId === overId) return;
+    if (activeId === overId) return;
 
-    // const isActiveAColumn = active.data.current?.type === "Column";
-    // if (!isActiveAColumn) return;
+    const isActiveAColumn = active.data.current?.type === "Column";
+    if (!isActiveAColumn) return;
 
-    // console.log("DRAG END");
+    console.log("DRAG END");
 
-    // setColumns((columns) => {
-    //   const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
+    setColumns((columns) => {
+      const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
 
-    //   const overColumnIndex = columns.findIndex((col) => col.id === overId);
+      const overColumnIndex = columns.findIndex((col) => col.id === overId);
 
-    //   return arrayMove(columns, activeColumnIndex, overColumnIndex);
-    // });
+      return arrayMove(columns, activeColumnIndex, overColumnIndex);
+    });
   }
 
   function onDragOver(event: DragOverEvent) {
-  //   const { active, over } = event;
-  //   if (!over) return;
+    const { active, over } = event;
+    if (!over) return;
 
-  //   const activeId = active.id;
-  //   const overId = over.id;
+    const activeId = active.id;
+    const overId = over.id;
 
-  //   if (activeId === overId) return;
+    if (activeId === overId) return;
 
-  //   const isActiveATask = active.data.current?.type === "Task";
-  //   const isOverATask = over.data.current?.type === "Task";
+    const isActiveATask = active.data.current?.type === "Task";
+    const isOverATask = over.data.current?.type === "Task";
 
-  //   if (!isActiveATask) return;
+    if (!isActiveATask) return;
 
-  //   // Im dropping a Task over another Task
-  //   if (isActiveATask && isOverATask) {
-  //     setTasks((tasks) => {
-  //       const activeIndex = tasks.findIndex((t) => t.id === activeId);
-  //       const overIndex = tasks.findIndex((t) => t.id === overId);
+    // Im dropping a Task over another Task
+    if (isActiveATask && isOverATask) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
+        const overIndex = tasks.findIndex((t) => t.id === overId);
 
-  //       if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
-  //         // Fix introduced after video recording
-  //         tasks[activeIndex].columnId = tasks[overIndex].columnId;
-  //         return arrayMove(tasks, activeIndex, overIndex - 1);
-  //       }
+        if (tasks[activeIndex].columnId != tasks[overIndex].columnId) {
+          // Fix introduced after video recording
+          tasks[activeIndex].columnId = tasks[overIndex].columnId;
+          return arrayMove(tasks, activeIndex, overIndex - 1);
+        }
 
-  //       return arrayMove(tasks, activeIndex, overIndex);
-  //     });
-  //   }
+        return arrayMove(tasks, activeIndex, overIndex);
+      });
+    }
 
-  //   const isOverAColumn = over.data.current?.type === "Column";
+    const isOverAColumn = over.data.current?.type === "Column";
 
-  //   // Im dropping a Task over a column
-  //   if (isActiveATask && isOverAColumn) {
-  //     setTasks((tasks) => {
-  //       const activeIndex = tasks.findIndex((t) => t.id === activeId);
+    // Im dropping a Task over a column
+    if (isActiveATask && isOverAColumn) {
+      setTasks((tasks) => {
+        const activeIndex = tasks.findIndex((t) => t.id === activeId);
 
-  //       tasks[activeIndex].columnId = overId;
-  //       console.log("DROPPING TASK OVER COLUMN", { activeIndex });
-  //       return arrayMove(tasks, activeIndex, activeIndex);
-  //     });
-  //   }
-  // }
+        tasks[activeIndex].columnId = overId;
+        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+        return arrayMove(tasks, activeIndex, activeIndex);
+      });
+    }
+  }
 }
 
 
