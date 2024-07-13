@@ -8,9 +8,9 @@ import Link from "next/link";
     <div className="flex h-screen flex-col">
       <header className="bg-white border-b p-4">
         <div className="flex items-center justify-between">
-          <Link className="text-2xl font-bold" href="/home">ELITE KANBAN</Link>
+          <Link className="text-2xl font-bold" href="/">ELITE KANBAN</Link>
           <div className="flex items-center space-x-4">
-            <ThemeButton />
+            {/* <ThemeButton /> */}
             <UserButton />
           </div>
         </div>

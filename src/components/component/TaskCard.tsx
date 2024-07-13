@@ -4,12 +4,26 @@ import { Id, Task } from "../../types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Trash2Icon } from "lucide-react";
-
-interface Props {
-  task: Task;
-  deleteTask: (id: Id) => void;
-  updateTask: (id: Id, content: string) => void;
+interface Card {
+  id: string,
+  title: string,
+  content: string,
+  section_id: string
+  position: number
 }
+interface Section {
+  id: string,
+  title: string,
+  user_id: string,
+  cards: Card[],
+  position:number
+}
+interface Props {
+  task: Card;
+  deleteTask: (id: string) => void;
+  updateTask: (id: string, content: string) => void;
+}
+
 
 function TaskCard({ task, deleteTask, updateTask }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
@@ -29,7 +43,10 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       task,
     },
     disabled: editMode,
-  });
+    resizeObserverConfig: {
+      box: 'border-box',
+    },
+  }, );
 
   const style = {
     transition,
