@@ -20,8 +20,8 @@ interface Section {
 }
 interface Props {
   task: Card;
-  deleteTask: (id: Id) => void;
-  updateTask: (id: Id, content: string) => void;
+  deleteTask: (id: string) => void;
+  updateTask: (id: string, content: string) => void;
 }
 
 

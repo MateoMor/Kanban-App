@@ -23,12 +23,12 @@ interface Section {
 
 interface Props {
   column: Section;
-  deleteColumn: (id: Id) => void;
-  updateColumn: (id: Id, title: string) => void;
+  deleteColumn: (id: string) => void;
+  updateColumn: (id: string, title: string) => void;
 
-  createTask: (columnId: Id) => void;
-  updateTask: (id: Id, content: string) => void;
-  deleteTask: (id: Id) => void;
+  createTask: (columnId: string) => void;
+  updateTask: (id: string, content: string) => void;
+  deleteTask: (id: string) => void;
   tasks: Card[];
 }
 
