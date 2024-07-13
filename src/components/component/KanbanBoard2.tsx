@@ -1,7 +1,7 @@
 'use client'
 
 import PlusIcon from "../../icons/PlusIcon";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Column, Id, Task } from "../../types";
 import ColumnContainer from "./ColumnContainer";
 import { getUserData } from "@/api/calls";
@@ -21,18 +21,19 @@ import {
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
-import { Columns } from "lucide-react";
 interface Card {
   id: string,
   title: string,
   content: string,
   section_id: string
+  position: number
 }
 interface Section {
   id: string,
   title: string,
   user_id: string,
   cards: Card[],
+  position:number
 }
 interface UserData {
   sections: Section[]
@@ -46,8 +47,16 @@ function KanbanBoard() {
     async function getData() {
       const token = localStorage.getItem("token");
       if (token){
-        const fetchedUserData = await getUserData(token);
-        console.log(fetchedUserData)
+        const fetchedUserData: UserData = await getUserData(token);
+
+        // Ordenar las secciones por su posición
+        fetchedUserData.sections.sort((a, b) => a.position - b.position);
+
+        // Ordenar las cartas dentro de cada sección por su posición
+        fetchedUserData.sections.forEach(section => {
+          section.cards.sort((a, b) => a.position - b.position);
+        });
+
         setUserData(fetchedUserData)
       }
       else {
@@ -57,11 +66,13 @@ function KanbanBoard() {
     getData()
   })
 
+  if (userData === null) {router.push('/login'); return}
+
   //
 
-  //const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+  const [activeColumn, setActiveColumn] = useState<Section | null>(null);
 
-  //const [activeTask, setActiveTask] = useState<Task | null>(null);
+  const [activeTask, setActiveTask] = useState<Card | null>(null);
 
   // Se activa cada vez que hay una modificación de las secciones
   // useEffect(() => {
@@ -83,18 +94,7 @@ function KanbanBoard() {
   );
 
   return (
-    <div
-      className="
-        m-auto
-        flex
-        min-h-screen
-        w-full
-        items-center
-        overflow-x-auto
-        overflow-y-hidden
-        px-[40px]
-    "
-    >
+    <div className=" m-auto flex min-h-screen w-full items-center overflow-x-auto overflow-y-hidden px-[40px] " >
       
       <DndContext
         sensors={sensors}
@@ -104,43 +104,30 @@ function KanbanBoard() {
       >
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
-            <SortableContext items={columnsId}>
+            <SortableContext items={userData.sections.map((section: Section) => section.id)}>
 
-              {columns.map((col) => (
+              {userData.sections.map((section: Section) => (
 
                 <ColumnContainer
-                  key={col.id}
-                  column={col}
+                  key={section.id}
+                  column={section}
                   deleteColumn={deleteColumn}
                   updateColumn={updateColumn}
                   createTask={createTask}
                   deleteTask={deleteTask}
                   updateTask={updateTask}
-                  tasks={tasks.filter((task) => task.columnId === col.id)}
+                  tasks={section.cards}
                 />
 
               ))}
             </SortableContext>
+
           </div>
           <button
             onClick={() => {
               createNewColumn();
             }}
-            className="
-      h-[60px]
-      w-[350px]
-      min-w-[350px]
-      cursor-pointer
-      rounded-lg
-      bg-mainBackgroundColor
-      border-2
-      border-columnBackgroundColor
-      p-4
-      ring-rose-500
-      hover:ring-2
-      flex
-      gap-2
-      "
+            className=" h-[60px] w-[350px] min-w-[350px] cursor-pointer rounded-lg bg-mainBackgroundColor border-2 border-columnBackgroundColor p-4 ring-rose-500 hover:ring-2 flex gap-2 "
           >
             <PlusIcon />
             Add Column
@@ -148,6 +135,7 @@ function KanbanBoard() {
         </div>
 
         {typeof document !== 'undefined' && createPortal(
+
           <DragOverlay>
             {activeColumn && (
               <ColumnContainer
@@ -157,9 +145,7 @@ function KanbanBoard() {
                 createTask={createTask}
                 deleteTask={deleteTask}
                 updateTask={updateTask}
-                tasks={tasks.filter(
-                  (task) => task.columnId === activeColumn.id
-                )}
+                tasks={activeColumn.cards}
               />
             )}
             {activeTask && (

@@ -1,53 +1,48 @@
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TrashIcon from "../../icons/TrashIcon";
-import { Column, Id, Task } from "../../types";
+import { Id } from "../../types";
 import { useMemo, useState } from "react";
 import PlusIcon from "../../icons/PlusIcon";
 import TaskCard from "./TaskCard";
 import { Trash2Icon } from "lucide-react";
+interface Card {
+  id: string,
+  title: string,
+  content: string,
+  section_id: string
+  position: number
+}
+interface Section {
+  id: string,
+  title: string,
+  user_id: string,
+  cards: Card[],
+  position:number
+}
 
 interface Props {
-  column: Column;
+  column: Section;
   deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
 
   createTask: (columnId: Id) => void;
   updateTask: (id: Id, content: string) => void;
   deleteTask: (id: Id) => void;
-  tasks: Task[];
+  tasks: Card[];
 }
 
-function ColumnContainer({
-  column,
-  deleteColumn,
-  updateColumn,
-  createTask,
-  tasks,
-  deleteTask,
-  updateTask,
-}: Props) {
+function ColumnContainer({ column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask }: Props) {
+
   const [editMode, setEditMode] = useState(false);
 
   const tasksIds = useMemo(() => {
     return tasks.map((task) => task.id);
   }, [tasks]);
 
-  const {
-    setNodeRef,
-    attributes,
-    listeners,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({
-    id: column.id,
-    data: {
-      type: "Column",
-      column,
-    },
-    disabled: editMode,
-  });
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging, } = useSortable({ id: column.id, data: { type: "Column", column, }, disabled: editMode,   resizeObserverConfig: {
+    box: 'border-box',
+  }, });
 
   const style = {
     transition,

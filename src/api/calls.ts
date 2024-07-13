@@ -9,12 +9,14 @@ interface Card {
   id: string;
   title: string;
   content: string;
+  position: number
   section_id: string;
 }
 interface Section {
   id: string;
   title: string;
   user_id: string;
+  position: number
   cards: Card[];
 }
 interface UserData {
